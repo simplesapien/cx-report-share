@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NiaHealth CX Report — 2026-04-04 to 2026-04-11</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.35.0.min.js" charset="utf-8"></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --teal: #0d9488;
+            --teal-light: #ccfbf1;
+            --teal-50: #f0fdfa;
+            --coral: #e74c3c;
+            --coral-light: #fef2f2;
+            --amber: #d97706;
+            --amber-light: #fffbeb;
+            --purple: #7c3aed;
+            --purple-light: #f5f3ff;
+            --blue: #2563eb;
+            --blue-light: #eff6ff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--gray-900);
+            background: var(--gray-50);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .report {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 48px 24px 64px;
+        }
+
+        /* ---- Header ---- */
+        .header { margin-bottom: 48px; }
+
+        .header-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--teal);
+            margin-bottom: 8px;
+        }
+
+        .header h1 {
+            font-family: 'Fraunces', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gray-900);
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+
+        .header-meta {
+            font-size: 15px;
+            color: var(--gray-500);
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 28px;
+            padding: 24px 0;
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .stat { display: flex; flex-direction: column; }
+
+        .stat-number {
+            font-family: 'Fraunces', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gray-900);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--gray-500);
+            margin-top: 6px;
+        }
+
+        .stat-delta {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .delta-up { color: var(--teal); }
+        .delta-down { color: var(--coral); }
+
+        /* ---- Sections ---- */
+        .section { margin-bottom: 52px; }
+
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--teal);
+            display: inline-block;
+        }
+
+        /* ---- Executive summary ---- */
+        .executive-summary {
+            background: white;
+            border-radius: 12px;
+            padding: 28px 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--gray-700);
+            border-left: 4px solid var(--teal);
+        }
+
+        /* ---- Charts ---- */
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+        }
+
+        /* ---- Channels ---- */
+        .channel-grid {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .channel-chip {
+            background: white;
+            border-radius: 10px;
+            padding: 14px 22px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .channel-count {
+            font-family: 'Fraunces', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .channel-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-500);
+        }
+
+        /* ---- Bug table ---- */
+        .table-wrap {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            overflow: hidden;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .data-table th {
+            text-align: left;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--gray-500);
+            padding: 12px 16px;
+            border-bottom: 2px solid var(--gray-200);
+            background: var(--gray-50);
+        }
+
+        .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: top;
+        }
+
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .severity-blocking { background: var(--coral-light); }
+        .severity-critical { background: #fde2e2; }
+        .severity-annoying { background: var(--amber-light); }
+
+        .severity-badge {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .badge-blocking { background: var(--coral); color: white; }
+        .badge-critical { background: #b91c1c; color: white; }
+        .badge-annoying { background: var(--amber); color: white; }
+
+        .count-badge {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--teal);
+            text-align: center;
+        }
+
+        .recurring-highlight {
+            font-weight: 700;
+            color: var(--coral);
+        }
+
+        .signal-tag {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 12px;
+            background: var(--purple-light);
+            color: var(--purple);
+            white-space: nowrap;
+        }
+
+        /* ---- Emerging topics ---- */
+        .emerging-list { list-style: none; padding: 0; }
+
+        .emerging-item {
+            background: white;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .emerging-label { font-size: 14px; color: var(--gray-700); }
+
+        .emerging-meta {
+            font-size: 12px;
+            color: var(--gray-500);
+            text-align: right;
+        }
+
+        .promotion-flag {
+            background: var(--amber-light);
+            border: 1px solid var(--amber);
+            border-radius: 6px;
+            padding: 10px 16px;
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--gray-700);
+        }
+
+        /* ---- Quotes ---- */
+        .quote-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-bottom: 14px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            position: relative;
+        }
+
+        .quote-text {
+            font-size: 15px;
+            font-style: italic;
+            color: var(--gray-700);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .quote-text::before {
+            content: '\201C';
+            font-family: 'Fraunces', serif;
+            font-size: 48px;
+            color: var(--gray-200);
+            position: absolute;
+            top: 8px;
+            left: 16px;
+            line-height: 1;
+        }
+
+        .quote-meta {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .quote-sentiment {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .sent-positive { background: var(--teal-light); color: var(--teal); }
+        .sent-frustrated { background: var(--coral-light); color: var(--coral); }
+        .sent-neutral { background: var(--gray-100); color: var(--gray-500); }
+
+        .quote-category {
+            font-size: 11px;
+            color: var(--gray-400);
+        }
+
+        /* ---- Recommendations ---- */
+        .rec-list {
+            list-style: none;
+            padding: 0;
+            counter-reset: rec;
+        }
+
+        .rec-item {
+            background: white;
+            border-radius: 10px;
+            padding: 18px 22px 18px 56px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            font-size: 14px;
+            color: var(--gray-700);
+            line-height: 1.55;
+            position: relative;
+            counter-increment: rec;
+        }
+
+        .rec-item::before {
+            content: counter(rec);
+            position: absolute;
+            left: 20px;
+            top: 18px;
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--teal);
+        }
+
+        /* ---- Sentiment subtext ---- */
+        .sentiment-subtext {
+            font-size: 13px;
+            color: var(--gray-400);
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        /* ---- Empty states ---- */
+        .empty-state {
+            color: var(--gray-400);
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* ---- Footer ---- */
+        .footer {
+            margin-top: 52px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray-200);
+            font-size: 12px;
+            color: var(--gray-400);
+            text-align: center;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 520px) {
+            .header-stats { gap: 20px; flex-wrap: wrap; }
+            .stat-number { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="report">
+
+        <!-- ======== 1. Header ======== -->
+        <header class="header">
+            <div class="header-label">Weekly CX Report</div>
+            <h1>Kevan Haggins</h1>
+            <div class="header-meta">2026-04-04 to 2026-04-11 · 2026-W15</div>
+            <div class="header-stats">
+                <div class="stat">
+                    <span class="stat-number">215</span>
+                    <span class="stat-label">Conversations</span>
+                    
+                </div>
+                
+                <div class="stat">
+                    <span class="stat-number">59</span>
+                    <span class="stat-label">Other / Emerging</span>
+                    
+                </div>
+                
+                <div class="stat">
+                    <span class="stat-number">52</span>
+                    <span class="stat-label">Pricing & Plans</span>
+                    
+                </div>
+                
+                <div class="stat">
+                    <span class="stat-number">47</span>
+                    <span class="stat-label">Access & Onboarding</span>
+                    
+                </div>
+                
+            </div>
+        </header>
+
+        <!-- ======== 2. Executive Summary ======== -->
+        
+        <section class="section">
+            <h2 class="section-title">Executive Summary</h2>
+            <div class="executive-summary">
+                This week saw 215 customer conversations dominated by pricing inquiries (24.2%) and access/onboarding issues (21.9%). Critical concern: 12 blocking bugs related to access codes and account setup are preventing customer activation, with 19% of access/onboarding conversations expressing frustration.
+            </div>
+        </section>
+        
+
+        <!-- ======== 3. Top Contact Reasons ======== -->
+        <section class="section">
+            <h2 class="section-title">Top Contact Reasons</h2>
+            
+            <div class="chart-container">
+                <div>                            <div id="f63a2cd0-b57e-4cfd-96a2-9c5e2b74b68f" class="plotly-graph-div" style="height:448px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("f63a2cd0-b57e-4cfd-96a2-9c5e2b74b68f")) {                    Plotly.newPlot(                        "f63a2cd0-b57e-4cfd-96a2-9c5e2b74b68f",                        [{"marker":{"color":["#a855f7","#059669","#2563eb","#dc2626","#d97706","#7c3aed","#0d9488","#6b7280"]},"name":"This week","orientation":"h","showlegend":false,"text":["1","4","7","15","30","47","52","59"],"textfont":{"family":"DM Sans, -apple-system, BlinkMacSystemFont, sans-serif","size":13},"textposition":"outside","x":[1,4,7,15,30,47,52,59],"y":["Feature Requests","Scheduling & Logistics","Insurance & Coverage","Geographic Availability","Tests & Biomarkers","Access & Onboarding","Pricing & Plans","Other \u002f Emerging"],"type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"margin":{"l":0,"r":80,"t":10,"b":10},"xaxis":{"visible":false},"yaxis":{"tickfont":{"size":13,"family":"DM Sans, -apple-system, BlinkMacSystemFont, sans-serif","color":"#374151"},"automargin":true},"legend":{"visible":false},"barmode":"overlay","height":448,"plot_bgcolor":"rgba(0,0,0,0)","paper_bgcolor":"rgba(0,0,0,0)"},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div>
+            </div>
+            
+        </section>
+
+        <!-- ======== 4. Category Trend ======== -->
+        
+
+        <!-- ======== 5. Sentiment Snapshot ======== -->
+        <section class="section">
+            <h2 class="section-title">Sentiment Snapshot</h2>
+            
+            <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 16px;">Access code validation failures across multiple touchpoints are creating a systemic barrier to customer onboarding, with 7 distinct blocking bugs reported.</p>
+            
+            <div class="chart-container">
+                <div>                            <div id="8eec9408-3513-4ed4-ad39-3ebd7086654e" class="plotly-graph-div" style="height:320px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("8eec9408-3513-4ed4-ad39-3ebd7086654e")) {                    Plotly.newPlot(                        "8eec9408-3513-4ed4-ad39-3ebd7086654e",                        [{"hole":0.55,"hoverinfo":"label+value+percent","labels":["Positive","Neutral","Frustrated"],"marker":{"colors":["#0d9488","#9ca3af","#e74c3c"],"line":{"color":"white","width":2}},"textfont":{"family":"DM Sans, -apple-system, BlinkMacSystemFont, sans-serif","size":13},"textinfo":"label+percent","values":[32.6,61.9,5.6],"type":"pie"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"margin":{"l":20,"r":20,"t":20,"b":20},"height":320,"showlegend":false,"paper_bgcolor":"rgba(0,0,0,0)"},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div>
+                
+            </div>
+        </section>
+
+        <!-- ======== 6. Bugs & Urgent Issues ======== -->
+        <section class="section">
+            <h2 class="section-title">Bugs &amp; Urgent Issues</h2>
+            
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Issue</th>
+                            <th style="text-align:center; width:80px;">Reports</th>
+                            <th style="width:100px;">Severity</th>
+                            <th style="width:100px;">First Seen</th>
+                            <th style="width:80px;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr class="severity-blocking">
+                            <td>Plan selection screen blocks account setup for secondary account holder</td>
+                            <td class="count-badge">1</td>
+                            <td><span class="severity-badge badge-blocking">blocking</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2026-W15</td>
+                            <td style="font-size:12px;">open</td>
+                        </tr>
+                        
+                        <tr class="severity-blocking">
+                            <td>Invalid email error on waitlist access code entry</td>
+                            <td class="count-badge">1</td>
+                            <td><span class="severity-badge badge-blocking">blocking</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2026-W15</td>
+                            <td style="font-size:12px;">open</td>
+                        </tr>
+                        
+                        <tr class="severity-blocking">
+                            <td>Access code invalid or expired</td>
+                            <td class="count-badge">1</td>
+                            <td><span class="severity-badge badge-blocking">blocking</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2026-W15</td>
+                            <td style="font-size:12px;">open</td>
+                        </tr>
+                        
+                        <tr class="severity-blocking">
+                            <td>Invite code not removing user from waitlist queue</td>
+                            <td class="count-badge">1</td>
+                            <td><span class="severity-badge badge-blocking">blocking</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2026-W15</td>
+                            <td style="font-size:12px;">open</td>
+                        </tr>
+                        
+                        <tr class="severity-blocking">
+                            <td>Unable to progress past 2-minute waiting queue on waitlist signup</td>
+                            <td class="count-badge">1</td>
+                            <td><span class="severity-badge badge-blocking">blocking</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2026-W15</td>
+                            <td style="font-size:12px;">open</td>
+                        </tr>
+                        
+                        <tr class="severity-blocking">
+                            <td>Access code rejection despite valid expiration</td>
+                            <td class="count-badge">1</td>
+                            <td><span class="severity-badge badge-blocking">blocking</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2026-W15</td>
+                            <td style="font-size:12px;">open</td>
+                        </tr>
+                        
+                        <tr class="severity-blocking">
+                            <td>Access code validation failure during onboarding</td>
+                            <td class="count-badge">1</td>
+                            <td><span class="severity-badge badge-blocking">blocking</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2026-W15</td>
+                            <td style="font-size:12px;">open</td>
+                        </tr>
+                        
+                        <tr class="severity-blocking">
+                            <td>SMS/email message delivery blocked or filtered</td>
+                            <td class="count-badge">1</td>
+                            <td><span class="severity-badge badge-blocking">blocking</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2026-W15</td>
+                            <td style="font-size:12px;">open</td>
+                        </tr>
+                        
+                        <tr class="severity-annoying">
+                            <td>Customer email landed in spam folder</td>
+                            <td class="count-badge">1</td>
+                            <td><span class="severity-badge badge-annoying">annoying</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2026-W15</td>
+                            <td style="font-size:12px;">open</td>
+                        </tr>
+                        
+                        <tr class="severity-blocking">
+                            <td>Access code restricts plan selection to Core only</td>
+                            <td class="count-badge">1</td>
+                            <td><span class="severity-badge badge-blocking">blocking</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2026-W15</td>
+                            <td style="font-size:12px;">open</td>
+                        </tr>
+                        
+                        <tr class="severity-annoying">
+                            <td>Internal agent message sent to customer as SMS</td>
+                            <td class="count-badge">1</td>
+                            <td><span class="severity-badge badge-annoying">annoying</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2026-W15</td>
+                            <td style="font-size:12px;">open</td>
+                        </tr>
+                        
+                        <tr class="severity-blocking">
+                            <td>Invite code validation repeats indefinitely during sign-up</td>
+                            <td class="count-badge">1</td>
+                            <td><span class="severity-badge badge-blocking">blocking</span></td>
+                            <td style="font-size:12px; color:var(--gray-500);">2026-W15</td>
+                            <td style="font-size:12px;">open</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+            
+        </section>
+
+        <!-- ======== 7. Feature Requests ======== -->
+        <section class="section">
+            <h2 class="section-title">Feature Requests</h2>
+            
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Theme</th>
+                            <th style="text-align:center; width:90px;">Mentions</th>
+                            <th style="text-align:center; width:120px;">Recurring Weeks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>flexible test customization beyond add-ons</td>
+                            <td class="count-badge">1</td>
+                            <td style="text-align:center;">
+                                <span class="">
+                                    1
+                                </span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Standalone DEXA scan purchase option</td>
+                            <td class="count-badge">1</td>
+                            <td style="text-align:center;">
+                                <span class="">
+                                    2
+                                </span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Standalone vitamin/mineral/hormone tests</td>
+                            <td class="count-badge">1</td>
+                            <td style="text-align:center;">
+                                <span class="">
+                                    1
+                                </span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Lite family plan option</td>
+                            <td class="count-badge">1</td>
+                            <td style="text-align:center;">
+                                <span class="">
+                                    2
+                                </span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Flexible biomarker testing frequency</td>
+                            <td class="count-badge">1</td>
+                            <td style="text-align:center;">
+                                <span class="">
+                                    1
+                                </span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>MTHFR and multi-gene panel expansion</td>
+                            <td class="count-badge">1</td>
+                            <td style="text-align:center;">
+                                <span class="">
+                                    1
+                                </span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Standalone DEXA scan purchase</td>
+                            <td class="count-badge">1</td>
+                            <td style="text-align:center;">
+                                <span class="">
+                                    1
+                                </span>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+            
+        </section>
+
+        <!-- ======== 8. Channel Source ======== -->
+        <section class="section">
+            <h2 class="section-title">Channel Source</h2>
+            <div class="channel-grid">
+                
+                <div class="channel-chip">
+                    <span class="channel-count">121</span>
+                    <span class="channel-name">SMS</span>
+                </div>
+                
+                <div class="channel-chip">
+                    <span class="channel-count">43</span>
+                    <span class="channel-name">Instagram</span>
+                </div>
+                
+                <div class="channel-chip">
+                    <span class="channel-count">32</span>
+                    <span class="channel-name">Email</span>
+                </div>
+                
+                <div class="channel-chip">
+                    <span class="channel-count">15</span>
+                    <span class="channel-name">Chat</span>
+                </div>
+                
+                <div class="channel-chip">
+                    <span class="channel-count">4</span>
+                    <span class="channel-name">Facebook</span>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- ======== 9. Emerging Topics ======== -->
+        
+        <section class="section">
+            <h2 class="section-title">Emerging Topics</h2>
+            <ul class="emerging-list">
+                
+                <li class="emerging-item">
+                    <div>
+                        <span class="emerging-label">classification failed</span>
+                    </div>
+                    <div class="emerging-meta">
+                        23 mentions (10.7%) · 2 weeks
+                    </div>
+                </li>
+                
+                
+                <li class="emerging-item">
+                    <div>
+                        <span class="emerging-label">abandoned conversation</span>
+                    </div>
+                    <div class="emerging-meta">
+                        10 mentions (4.7%) · 1 week
+                    </div>
+                </li>
+                
+                
+                <li class="emerging-item">
+                    <div>
+                        <span class="emerging-label">Competitive comparison inquiry</span>
+                    </div>
+                    <div class="emerging-meta">
+                        1 mentions (0.5%) · 1 week
+                    </div>
+                </li>
+                
+                
+                <li class="emerging-item">
+                    <div>
+                        <span class="emerging-label">unclear request or bot interaction</span>
+                    </div>
+                    <div class="emerging-meta">
+                        1 mentions (0.5%) · 1 week
+                    </div>
+                </li>
+                
+                
+                <li class="emerging-item">
+                    <div>
+                        <span class="emerging-label">Unclear request via social media</span>
+                    </div>
+                    <div class="emerging-meta">
+                        1 mentions (0.5%) · 1 week
+                    </div>
+                </li>
+                
+                
+            </ul>
+        </section>
+        
+
+        <!-- ======== 10. Voice of the Customer ======== -->
+        
+        <section class="section">
+            <h2 class="section-title">Voice of the Customer</h2>
+            
+            <div class="quote-card">
+                <div class="quote-text">&nbsp;&nbsp;&nbsp;&nbsp;We don't provide supplements ourselves, but can recommend them based on your lab results.</div>
+                <div class="quote-meta">
+                    <span class="quote-sentiment sent-positive">positive</span>
+                    <span class="quote-category">Access & Onboarding</span>
+                </div>
+            </div>
+            
+            <div class="quote-card">
+                <div class="quote-text">&nbsp;&nbsp;&nbsp;&nbsp;you can't do any of the advance tests here unless I travel so there is no point</div>
+                <div class="quote-meta">
+                    <span class="quote-sentiment sent-frustrated">frustrated</span>
+                    <span class="quote-category">Geographic Availability</span>
+                </div>
+            </div>
+            
+            <div class="quote-card">
+                <div class="quote-text">&nbsp;&nbsp;&nbsp;&nbsp;Trying to compare your service to Viome out of the US. What are the key differences?</div>
+                <div class="quote-meta">
+                    <span class="quote-sentiment sent-neutral">neutral</span>
+                    <span class="quote-category">Other / Emerging</span>
+                </div>
+            </div>
+            
+        </section>
+        
+
+        <!-- ======== 11. Recommendations ======== -->
+        
+        <section class="section">
+            <h2 class="section-title">Recommendations</h2>
+            <ol class="rec-list">
+                
+                <li class="rec-item">Immediately deploy engineering resources to fix access code validation bugs - these blocking issues are preventing revenue capture from interested customers</li>
+                
+                <li class="rec-item">Create a pricing comparison tool or enhanced documentation to address the 24.2% of conversations about plan costs and tier comparisons</li>
+                
+                <li class="rec-item">Implement automated classification for the 10.7% of failed classifications to improve support efficiency and identify hidden issues</li>
+                
+                <li class="rec-item">Expand service availability communications for the 7% asking about geographic coverage, particularly for Saskatchewan, Alberta, and rural areas</li>
+                
+            </ol>
+        </section>
+        
+
+        <!-- ======== 12. Footer ======== -->
+        <footer class="footer">
+            Generated by NiaHealth CX Pipeline · 2026-04-11 05:24 UTC
+        </footer>
+    </div>
+</body>
+</html>
